@@ -78,9 +78,6 @@ FRUITS:
     apple banana peach
     melon grape
 
-# hash-map:
-USER: name Max, password 123,
-
 # matrix:
 PRICE:
 - 0 1 2
@@ -91,6 +88,9 @@ PRICE:
 PRICE:
 - [0 1] [0 2]
 - [0 1] [0 2]
+
+# hash-map:
+USER: name Max, password 123,
 
 # tuple:
 PRICE: (100, USD, "$")
