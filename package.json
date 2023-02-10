@@ -1,0 +1,12 @@
+{
+    "name": "coml",
+    "type": "module",
+    "main": "index.js",
+    "bin": "index.js",
+    "scripts": {
+        "bin": "npm i . -g",
+        "unbin": "npm un coml -g",
+        "f": "node . -f config.yml",
+        "t": "node test -f beep"
+    }
+}
