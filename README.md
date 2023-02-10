@@ -3,3 +3,5 @@
 ### Description
 
 #### File Extension: `.coml`
+
+[CHANGELOG](CHANGELOG.md)
