@@ -71,7 +71,7 @@ Collections:
 
 ```hs
 # list/vector:
-FRUITS: apple banana peach
+FRUITS: !apple banana peach
 
 # and multiline assign:
 FRUITS:
@@ -80,17 +80,19 @@ FRUITS:
 
 # matrix:
 PRICE:
-- 0 1 2
-- 2 3 1
-- 3 0 4
+    0 1 2,
+    2 3 1,
+    3 0 4,
 
 # tensor:
 PRICE:
-- [0 1] [0 2]
-- [0 1] [0 2]
+    [0 1] [0 2],
+    [0 1] [0 2],
 
 # hash-map:
-USER: name Max, password 123,
+USER:
+name = Max
+password = 123
 
 # tuple:
 PRICE: (100, USD, "$")
