@@ -1,9 +1,5 @@
-#:
 # Config-Oriented Markup Language (COML)
-# @v0.0.1
-#
 
-[*] @env
 PORT 3000
 HOST 127.0.0.1
 
@@ -12,12 +8,11 @@ HOST
 PORT: 4000
 
 
-names: Max Denis Bob :NAMES
-fruits: apple banana peach :FRUITS
-
-package: @json ./package.json
+names: Max Denis Bob
+fruits: apple banana peach
 
 
+url https://{HOST}:{PORT}/api
 
 [prod]
 

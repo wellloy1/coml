@@ -1,22 +1,73 @@
 import fs from "fs";
 import { formatFile, formatRows } from "./format.js";
 
+const rules = {
+    parse: (char, k) => {
+        if (currOperator === null) {
+        }
+        const op = operators[char];
+    },
+    skip: () => {},
+};
+
+const modes = {
+    strings: () => {},
+    any: () => {},
+    notStrings: () => {},
+};
+
 const operators = {
-    1: { "#": 1, "*": 1 },
-    2: {},
+    "#": {
+        rule: rules.skip,
+    },
+};
+
+const legalFirstChars = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const legalChars = validFirstChars + "0123456789";
+const quotes = {
+    34: "'",
+    39: '"',
+    96: "`",
+};
+
+const scopes = {
+    global: {
+        $: {},
+        scopes: {},
+    },
+};
+
+const vars = {
+    global: {},
 };
 
 const state = {
-    blocks: [
-        {
-            vars: {},
-        },
-    ],
-    tree: [],
+    cache: [], // use as stack: unshift/shift
+    opers: [], // use as stack: unshift/shift
+    vars: [], // use as stack: unshift/shift
+    closer: [], // use as stack: unshift/shift
+    breaker: [], // use as stack: unshift/shift
+    mode: modes.notStrings,
+    rule: rules.parse,
 };
 
+const result = {};
+const error = {};
+
 export function parseFile(file) {
-    file = file.trim();
+    const rows = getRows(file);
+    runRows(rows, (row, i) => {
+        runRow(row, (char, k) => {
+            state.rule(char, k);
+        });
+    });
+}
+
+export function getRows(file) {
+    return file
+        .split("\n")
+        .map((row) => row.trim())
+        .filter((n) => !!n);
 }
 
 function runRows(rows, fn, i = 0) {
@@ -33,13 +84,6 @@ function runRow(row, fn, i = 0) {
         fn(row[i], i);
         i++;
     }
-}
-
-export function getRows(file) {
-    return file
-        .split("\n")
-        .map((row) => row.trim())
-        .filter((n) => !!n);
 }
 
 export function parseRows(rows) {}

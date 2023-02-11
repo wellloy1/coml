@@ -6,4 +6,4 @@ import { formatFile, formatRows } from "./format.js";
 const fileName = "./config.yml";
 const file = fs.readFileSync(fileName, "utf8");
 
-console.log(getRows(file));
+parseFile(file);
