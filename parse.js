@@ -1,33 +1,76 @@
 import fs from "fs";
 import { formatFile, formatRows } from "./format.js";
 
+class Parser {
+    constructor() {}
+}
+
 const rules = {
-    parse: (char, k) => {
-        if (currOperator === null) {
-        }
-        const op = operators[char];
+    default(char, ri) {
+        this.notStrings;
     },
-    skip: () => {},
+};
+
+const firstVars = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const firstNums = "0123456789";
+const nextVars = firstVars + firstNums;
+const nextNums = "e0123456789";
+
+const chars = {
+    vars: {
+        first: firstVars,
+        next: nextVars,
+    },
+    nums: {
+        first: firstNums,
+        next: nextNums,
+    },
+    math: {
+        "*": {},
+        "/": {},
+        "-": {},
+        "+": {},
+    },
+    seps: {
+        " ": {
+            action: { string: {}, vars: {} },
+            closer: null,
+        },
+        ",": {
+            action: null,
+            closer: null,
+        },
+        ":": {
+            action: null,
+            closer: null,
+        },
+        "[": {
+            action: null,
+            closer: "]",
+        },
+        '"': {
+            closer: '"',
+        },
+        "'": {
+            action: null,
+            closer: "'",
+        },
+        "`": {
+            action: null,
+            closer: "`",
+        },
+    },
+    comment: {
+        "#": {
+            closer: null,
+        },
+    },
 };
 
 const modes = {
-    strings: () => {},
-    any: () => {},
-    notStrings: () => {},
-};
-
-const operators = {
-    "#": {
-        rule: rules.skip,
+    entry: {
+        allowed: [chars.legalFirstChars],
     },
-};
-
-const legalFirstChars = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const legalChars = validFirstChars + "0123456789";
-const quotes = {
-    34: "'",
-    39: '"',
-    96: "`",
 };
 
 const scopes = {
@@ -37,30 +80,21 @@ const scopes = {
     },
 };
 
-const vars = {
-    global: {},
-};
-
 const state = {
     cache: [], // use as stack: unshift/shift
     opers: [], // use as stack: unshift/shift
     vars: [], // use as stack: unshift/shift
     closer: [], // use as stack: unshift/shift
     breaker: [], // use as stack: unshift/shift
-    mode: modes.notStrings,
-    rule: rules.parse,
+    mode: modes.default,
+    rule: rules.recon,
 };
 
 const result = {};
 const error = {};
 
-export function parseFile(file) {
-    const rows = getRows(file);
-    runRows(rows, (row, i) => {
-        runRow(row, (char, k) => {
-            state.rule(char, k);
-        });
-    });
+function handler(...args) {
+    console.log(args);
 }
 
 export function getRows(file) {
@@ -70,24 +104,33 @@ export function getRows(file) {
         .filter((n) => !!n);
 }
 
-function runRows(rows, fn, i = 0) {
+function runRows(rows, fn, ri = 0) {
     const l = rows.length;
-    while (i < l) {
-        fn(rows[i], i);
-        i++;
+    while (ri < l) {
+        fn(rows[ri], ri);
+        ri++;
     }
 }
 
-function runRow(row, fn, i = 0) {
+function runRow(row, fn, ci = 0) {
     const l = row.length;
-    while (i < l) {
-        fn(row[i], i);
-        i++;
+    while (ci < l) {
+        fn(row[ci], ci);
+        ci++;
     }
 }
 
 export function parseRows(rows) {}
 
-function parseRow(row) {
-    runRow(row, (v, i) => {});
+export function parseRow(row) {
+    runRow(row, (char, ci) => {});
+}
+
+export function parseFile(file) {
+    const rows = getRows(file);
+    runRows(rows, (row, ri) => {
+        runRow(row, (char, ci) => {
+            handler(char, ci);
+        });
+    });
 }

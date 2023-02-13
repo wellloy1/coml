@@ -1,14 +1,15 @@
 # Config-Oriented Markup Language (COML)
+# @env: .env
+# :env: PORT, HOST
 
 PORT 3000
 HOST 127.0.0.1
-
-HOST
+HOST 3000
 
 PORT: 4000
 
 
-names: Max Denis Bob
+names: Max Denis Rob
 fruits: apple banana peach
 
 
