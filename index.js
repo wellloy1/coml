@@ -4,6 +4,8 @@ import { parseFile, parseRows, getRows } from "./parse.js";
 import { formatFile, formatRows } from "./format.js";
 
 const fileName = "./config.yml";
-const file = fs.readFileSync(fileName, "utf8");
+const coml = fs.readFileSync(fileName, "utf8");
 
-parseFile(file);
+const data = parseFile(coml);
+
+console.log(data);

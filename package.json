@@ -1,5 +1,6 @@
 {
-    "name": "coml",
+    "version": "0.0.1",
+    "name": "comljs",
     "type": "module",
     "main": "index.js",
     "bin": "index.js",
@@ -8,5 +9,9 @@
         "unbin": "npm un coml -g",
         "f": "node . -f config.yml",
         "t": "node test -f beep"
+    },
+    "dependencies": {
+        "toml": "^3.0.0",
+        "yaml": "^2.2.1"
     }
 }
